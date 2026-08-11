@@ -1,0 +1,16 @@
+name: CI/CD
+
+on: push
+
+jobs:
+    prod-check:
+        if: ${{ github.ref == 'refs/heads/main' }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Run Ruff
+              uses: astral-sh/ruff-action@v4.1.0
+              with:
+                  args: "check --fix format"
