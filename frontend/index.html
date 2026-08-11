@@ -6,9 +6,61 @@
     <title>List</title>
 </head>
 <body>
-    <form>
-        <input type="text" placeholder="Item name...">
+    <form id="itemForm">
+        <input type="text" id="itemName" placeholder="Item name..." required>
         <button type="submit">+</button>
     </form>
+
+    <h2>Your list:</h2>
+    <ul id="itemList"></ul>
+
+    <script>
+        async function loadItems() {
+            try {
+                const response = await fetch('/api/items');
+                if (response.ok) {
+                    const items = await response.json();
+                    const ul = document.getElementById('itemList');
+                    ul.innerHTML = '';
+
+                    items.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item.name;
+                        ul.appendChild(li);
+                    });
+                }
+            } catch (error) {
+                console.error('Error while fetching the list:', error);
+            }
+        }
+
+        loadItems();
+
+        document.getElementById('itemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const inputField = document.getElementById('itemName');
+            const itemName = inputField.value;
+
+            try {
+                const response = await fetch('/api/items', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: itemName })
+                });
+
+                if (response.ok) {
+                    inputField.value = '';
+                    loadItems();
+                } else {
+                    console.error('Server error');
+                }
+            } catch (error) {
+                console.error('Connection error:', error);
+            }
+        });
+    </script>
 </body>
 </html>
