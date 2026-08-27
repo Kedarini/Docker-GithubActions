@@ -22,15 +22,19 @@ jobs:
 
       - name: Install dependencies
         run: uv sync --all-extras --dev
+        working-directory: ./backend
 
       - name: Run Ruff Linter
         run: uv run ruff check .
+        working-directory: ./backend
 
       - name: Run Ruff Format Check
         run: uv run ruff format --check .
+        working-directory: ./backend
 
       - name: Run unit tests
         run: uv run pytest
+        working-directory: ./backend
 
   build:
     name: Build package
