@@ -19,10 +19,13 @@ A multi-service web application fully containerized with Docker and orchestrated
 [Client] → [Nginx (Reverse Proxy :80)] → [Frontend] / [FastAPI Backend]
                                               ↓
                                            [PostgreSQL]
+    
+    
 - Nginx acts as the single entry point for the application, routing incoming requests to the appropriate service.
 - Frontend and FastAPI run in separate containers and communicate over an internal Docker network.
 - PostgreSQL is used as the persistent database, with its data stored in a dedicated Docker volume.
 - All services are connected through a shared network created automatically by docker-compose.yml.
+    
 Features
 - Multi-container setup – Each component runs in its own isolated container.
 - Nginx reverse proxy – Clean, unified access to both the frontend and API through port 80.
@@ -31,8 +34,10 @@ Features
 - CI build validation – GitHub Actions ensures all Docker images build correctly on every change.
 Getting Started
 Prerequisites
+    
 - Docker
 - Docker Compose
+    
 Run Locally
 1. Clone the repository
 git clone https://github.com/Kedarini/Docker-GithubActions.git
@@ -48,6 +53,7 @@ Open http://localhost in your browser.
 docker compose down
 To also remove the database volume: 
 docker compose down -v
+    
 Environment Variables
 Create a .env.example file in the root of the repository with the following values:
 POSTGRES_DB=app_db
@@ -55,9 +61,14 @@ POSTGRES_USER=app_user
 POSTGRES_PASSWORD=app_password
 DATABASE_URL=postgresql://app_user:app_password@db:5432/app_db
 Note: Never commit your real .env file to Git. Only keep .env.example in the repository.
+    
 CI/CD
+    
 This repository includes a GitHub Actions workflow located in .github/workflows/. On every push and pull request, it runs docker compose build to validate that all services can be built successfully. This ensures configuration errors in Dockerfile or docker-compose.yml are caught early.
+    
 Project Goals
+    
 The main goal of this project was to get hands-on with multi-container orchestration, Nginx reverse proxy configuration, inter-container networking and basic CI build validation with GitHub Actions. 
+    
 License
 This project is licensed under the MIT License.
