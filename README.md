@@ -32,7 +32,9 @@ Features
 - Service orchestration – Entire stack spun up and torn down with a single command.
 - Internal networking – Services communicate securely over Docker's internal network.
 - CI build validation – GitHub Actions ensures all Docker images build correctly on every change.
+
 Getting Started
+
 Prerequisites
     
 - Docker
